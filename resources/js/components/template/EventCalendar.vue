@@ -1,10 +1,15 @@
 <template>
   <div>
     <h3>{{getMonthName()}} {{date.getFullYear()}}</h3>
+    <button @click="prevMonth()">Prev Month</button>
+    <button @click="nextMonth()">Next Month</button>
     <div class="calendar-dates" v-bind:style="{height: windowHeight}">
-      <div v-for="d in daysInMonth" :key="d">
+      <div class="calendar-day" v-for="d in daysInMonth" :key="d">
         <div class="col-md-2">
           <p>{{d}} {{getDay(d)}}</p>
+        </div>
+        <div class="col-md-10">
+          <p>{{event.name}}</p>
         </div>
       </div>
     </div>
@@ -17,7 +22,10 @@ export default {
     return {
       date: new Date(),
       daysInMonth: null,
-      windowHeight: 300
+      windowHeight: 300,
+      event: {
+        name: null
+      }
     };
   },
   created() {
@@ -69,6 +77,26 @@ export default {
     },
     handleResize() {
       this.windowHeight = window.innerHeight - 200 + "px";
+    },
+    prevMonth() {
+      var year = this.date.getFullYear();
+      var month = this.date.getMonth();
+      this.date = new Date(year, month - 1);
+      this.daysInMonth = new Date(
+        this.date.getFullYear(),
+        this.date.getMonth() + 1,
+        0
+      ).getDate();
+    },
+    nextMonth() {
+      var year = this.date.getFullYear();
+      var month = this.date.getMonth();
+      this.date = new Date(year, month + 1);
+      this.daysInMonth = new Date(
+        this.date.getFullYear(),
+        this.date.getMonth() + 1,
+        0
+      ).getDate();
     }
   }
 };

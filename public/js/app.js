@@ -1813,12 +1813,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       date: new Date(),
       daysInMonth: null,
-      windowHeight: 300
+      windowHeight: 300,
+      event: {
+        name: null
+      }
     };
   },
   created: function created() {
@@ -1847,6 +1855,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleResize: function handleResize() {
       this.windowHeight = window.innerHeight - 200 + "px";
+    },
+    prevMonth: function prevMonth() {
+      var year = this.date.getFullYear();
+      var month = this.date.getMonth();
+      this.date = new Date(year, month - 1);
+      this.daysInMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
+    },
+    nextMonth: function nextMonth() {
+      var year = this.date.getFullYear();
+      var month = this.date.getMonth();
+      this.date = new Date(year, month + 1);
+      this.daysInMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
     }
   }
 });
@@ -1862,6 +1882,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -37275,12 +37297,40 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            return _vm.prevMonth()
+          }
+        }
+      },
+      [_vm._v("Prev Month")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            return _vm.nextMonth()
+          }
+        }
+      },
+      [_vm._v("Next Month")]
+    ),
+    _vm._v(" "),
+    _c(
       "div",
       { staticClass: "calendar-dates", style: { height: _vm.windowHeight } },
       _vm._l(_vm.daysInMonth, function(d) {
-        return _c("div", { key: d }, [
+        return _c("div", { key: d, staticClass: "calendar-day" }, [
           _c("div", { staticClass: "col-md-2" }, [
             _c("p", [_vm._v(_vm._s(d) + " " + _vm._s(_vm.getDay(d)))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-10" }, [
+            _c("p", [_vm._v(_vm._s(_vm.event.name))])
           ])
         ])
       }),
@@ -37315,7 +37365,9 @@ var render = function() {
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [_c("days-selector")], 1)
+    _c("div", { staticClass: "form-group" }, [_c("days-selector")], 1),
+    _vm._v(" "),
+    _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Save")])
   ])
 }
 var staticRenderFns = [

@@ -19,6 +19,8 @@
     <div class="form-group">
       <days-selector />
     </div>
+
+    <button class="btn btn-primary">Save</button>
   </form>
 </template>
 

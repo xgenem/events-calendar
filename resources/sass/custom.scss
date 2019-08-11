@@ -18,3 +18,22 @@ label {
 .calendar-dates {
     overflow: scroll;
 }
+
+.calendar-day {
+    border: 1px solid $body-bg;
+    padding: 10px;
+}
+
+.calendar-day p {
+    margin: 0;
+    color: #777;
+}
+
+.selected {
+    background: $purple;
+}
+
+.selected p {
+    font-weight: 700;
+    color: $white;
+}
