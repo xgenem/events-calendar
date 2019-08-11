@@ -13511,6 +13511,9 @@ __webpack_require__.r(__webpack_exports__);
     saveEvent: function saveEvent(e) {
       e.preventDefault();
       this.isSaving = true;
+      this.$http.get("/events", function (result) {
+        console.log(result);
+      });
       this.$Msg.success("This is a notification", {
         position: "bottom-right"
       });
@@ -83074,7 +83077,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_2__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faCircleNotch"]);
 Vue.component("font-awesome-icon", _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_4__["FontAwesomeIcon"]); // Global register
 
-Vue.use(v_msgx__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_5___default.a); // Manually add component? Should I automatically add it too? hmm
+Vue.use(v_msgx__WEBPACK_IMPORTED_MODULE_1___default.a); // use axios globally
+
+Vue.prototype.$http = axios__WEBPACK_IMPORTED_MODULE_5___default.a; // Manually add component? Should I automatically add it too? hmm
 
 Vue.component("new-events-component", __webpack_require__(/*! ./components/NewEventsComponent.vue */ "./resources/js/components/NewEventsComponent.vue")["default"]); // Add Template files
 

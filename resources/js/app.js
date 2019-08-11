@@ -19,7 +19,10 @@ library.add(faCircleNotch);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 // Global register
-Vue.use(Msg, axios);
+Vue.use(Msg);
+
+// use axios globally
+Vue.prototype.$http = axios;
 
 // Manually add component? Should I automatically add it too? hmm
 Vue.component(
