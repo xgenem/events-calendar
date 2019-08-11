@@ -13511,7 +13511,7 @@ __webpack_require__.r(__webpack_exports__);
     saveEvent: function saveEvent(e) {
       e.preventDefault();
       this.isSaving = true;
-      this.$http.get("/events", function (result) {
+      this.$http.get("./api/events", function (result) {
         console.log(result);
       });
       this.$Msg.success("This is a notification", {

@@ -44,6 +44,12 @@ export default {
     saveEvent(e) {
       e.preventDefault();
       this.isSaving = true;
+
+      this.$http.get("./api/events", result => {
+        console.log(result);
+      });
+
+      this.$Msg.success("This is a notification", { position: "bottom-right" });
       console.log("test");
     }
   }
