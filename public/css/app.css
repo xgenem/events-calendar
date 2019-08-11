@@ -10644,3 +10644,20 @@ a.text-dark:focus {
   }
 }
 
+.container {
+  margin-top: 40px;
+}
+
+label {
+  font-weight: 700;
+}
+
+.days-selector-item {
+  float: left;
+  margin-right: 9px;
+}
+
+.days-selector-item::last {
+  margin-right: 0;
+}
+
