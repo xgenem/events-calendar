@@ -28,7 +28,8 @@ class EventsController extends Controller
         $rules = [
             'title' => 'required|string',
             'start' => 'required|date',
-            'end' => 'required|date|min:14|max:14',
+            'end' => 'required|date',
+            'days' => 'required|min:14|max:14',
         ];
         return $rules;
     }
