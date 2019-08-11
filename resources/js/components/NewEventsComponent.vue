@@ -4,7 +4,7 @@
       <div class="col-md-4">
         <event-form />
       </div>
-      <div class="col-md-8 fo">
+      <div class="col-md-8">
         <event-calendar />
       </div>
     </div>
