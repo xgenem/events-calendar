@@ -1,3 +1,7 @@
+.clearfix {
+    clear: both;
+}
+
 .container {
     margin-top: 40px;
 }
@@ -11,8 +15,21 @@ label {
     margin-right: 9px;
 }
 
-.days-selector-item::last {
+.days-selector-item:last-child {
     margin-right: 0;
+}
+
+.calendar-month-year {
+    float: left;
+}
+
+.calendar-controls {
+    float: right;
+    width: 70px;
+}
+
+.calendar-control {
+    margin: 2px;
 }
 
 .calendar-dates {
@@ -20,7 +37,7 @@ label {
 }
 
 .calendar-day {
-    border: 1px solid $body-bg;
+    border-top: 1px solid #dadada;
     padding: 10px;
 }
 
@@ -36,4 +53,14 @@ label {
 .selected p {
     font-weight: 700;
     color: $white;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.btn-circle:focus {
+    outline: none;
 }
