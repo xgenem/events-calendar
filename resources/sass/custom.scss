@@ -14,3 +14,7 @@ label {
 .days-selector-item::last {
     margin-right: 0;
 }
+
+.calendar-dates {
+    overflow: scroll;
+}
