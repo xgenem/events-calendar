@@ -9,6 +9,9 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+// axios
+import axios from "axios";
+
 window.Vue = require("vue");
 
 library.add(faCircleNotch);
@@ -16,7 +19,7 @@ library.add(faCircleNotch);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 // Global register
-Vue.use(Msg);
+Vue.use(Msg, axios);
 
 // Manually add component? Should I automatically add it too? hmm
 Vue.component(
