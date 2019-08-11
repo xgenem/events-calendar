@@ -15,6 +15,7 @@
 export default {
   mounted() {
     // console.log("Component mounted.");
+    // this.$Msg.success("This is a notification", { position: "top-right" });
   }
 };
 </script>

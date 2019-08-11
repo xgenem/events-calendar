@@ -1,7 +1,13 @@
 // libraries
 require("./bootstrap");
+import "v-msgx/dist/msg.min.css";
 
 window.Vue = require("vue");
+
+import Msg from "v-msgx";
+
+// Global register
+Vue.use(Msg);
 
 // Manually add component? Should I automatically add it too? hmm
 Vue.component(

@@ -1,18 +1,19 @@
 <template>
-  <form>
+  <form @submit="saveEvent">
     <div class="form-group">
       <label>Event</label>
-      <input type="text" class="form-control" placeholder="Title" />
+      <input type="text" class="form-control" placeholder="Title" v-model="title" />
     </div>
+
     <div class="form-group row">
       <div class="col-md-6">
         <label for="start">From</label>
-        <input type="date" class="form-control" id="start" />
+        <date-input :name="'start'" />
       </div>
 
       <div class="col-md-6">
         <label for="end">To</label>
-        <input type="date" class="form-control" id="end" />
+        <date-input :name="'end'" />
       </div>
     </div>
 
@@ -20,14 +21,32 @@
       <days-selector />
     </div>
 
-    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary">
+      <span v-if="!isSaving">Save</span>
+      <span v-else>
+        <!-- <Icon name="time" /> -->
+
+        <font-awesome-icon icon="user-secret" />
+      </span>
+    </button>
   </form>
 </template>
 
 <script>
 export default {
-  mounted() {
-    // console.log("Component mounted.");
+  data() {
+    return {
+      title: "",
+      start: null,
+      end: null,
+      isSaving: true
+    };
+  },
+  methods: {
+    saveEvent(e) {
+      e.preventDefault();
+      console.log("test");
+    }
   }
 };
 </script>
