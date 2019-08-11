@@ -1806,11 +1806,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      date: new Date()
+      date: new Date(),
+      daysInMonth: null,
+      windowHeight: 300
     };
+  },
+  created: function created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  beforeMount: function beforeMount() {
+    // get number of days in the selected month
+    var year = this.date.getFullYear();
+    var month = this.date.getMonth();
+    this.daysInMonth = new Date(year, month + 1, 0).getDate();
   },
   mounted: function mounted() {// console.log("Component mounted.");
   },
@@ -1818,6 +1837,16 @@ __webpack_require__.r(__webpack_exports__);
     getMonthName: function getMonthName() {
       var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       return months[this.date.getMonth()];
+    },
+    getDay: function getDay(d) {
+      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      var year = this.date.getFullYear();
+      var month = this.date.getMonth();
+      var dt = new Date(year, month, d);
+      return dt.toString().split(" ")[0];
+    },
+    handleResize: function handleResize() {
+      this.windowHeight = window.innerHeight - 200 + "px";
     }
   }
 });
@@ -37140,7 +37169,7 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-4" }, [_c("event-form")], 1),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-8 fo" }, [_c("event-calendar")], 1)
+      _c("div", { staticClass: "col-md-8" }, [_c("event-calendar")], 1)
     ])
   ])
 }
@@ -37243,7 +37272,20 @@ var render = function() {
   return _c("div", [
     _c("h3", [
       _vm._v(_vm._s(_vm.getMonthName()) + " " + _vm._s(_vm.date.getFullYear()))
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "calendar-dates", style: { height: _vm.windowHeight } },
+      _vm._l(_vm.daysInMonth, function(d) {
+        return _c("div", { key: d }, [
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("p", [_vm._v(_vm._s(d) + " " + _vm._s(_vm.getDay(d)))])
+          ])
+        ])
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []

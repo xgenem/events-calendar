@@ -10661,3 +10661,7 @@ label {
   margin-right: 0;
 }
 
+.calendar-dates {
+  overflow: scroll;
+}
+
