@@ -24,9 +24,7 @@
     <button class="btn btn-primary">
       <span v-if="!isSaving">Save</span>
       <span v-else>
-        <!-- <Icon name="time" /> -->
-
-        <font-awesome-icon icon="user-secret" />
+        <font-awesome-icon class="fa-spin" icon="circle-notch" />
       </span>
     </button>
   </form>
@@ -39,12 +37,13 @@ export default {
       title: "",
       start: null,
       end: null,
-      isSaving: true
+      isSaving: false
     };
   },
   methods: {
     saveEvent(e) {
       e.preventDefault();
+      this.isSaving = true;
       console.log("test");
     }
   }

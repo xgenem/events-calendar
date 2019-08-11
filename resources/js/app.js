@@ -2,9 +2,18 @@
 require("./bootstrap");
 import "v-msgx/dist/msg.min.css";
 
+import Msg from "v-msgx";
+
+// fontawesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 window.Vue = require("vue");
 
-import Msg from "v-msgx";
+library.add(faCircleNotch);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 // Global register
 Vue.use(Msg);
