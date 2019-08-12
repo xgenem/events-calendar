@@ -29,6 +29,8 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "jquery-ui": "^1.12.1",
         "jquery-ui-bundle": "^1.12.1-migrate",
+        "moment": "^2.24.0",
+        "moment-range": "^4.0.2",
         "v-msgx": "^1.0.3"
     }
 }
