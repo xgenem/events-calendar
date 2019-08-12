@@ -97,7 +97,7 @@ export default {
         this.prevButtonDisabled = true;
       }
       // update days in month
-      this.getDaysInMonth();
+      this.setDaysInMount();
     },
     nextMonth() {
       let year = this.date.getFullYear();
@@ -109,9 +109,9 @@ export default {
       //   }
 
       // update days in month
-      this.getDaysInMonth();
+      this.setDaysInMount();
     },
-    getDaysInMonth() {
+    setDaysInMount() {
       this.daysInMonth = new Date(
         this.date.getFullYear(),
         this.date.getMonth() + 1,
@@ -125,10 +125,12 @@ export default {
       let dname = dt.toString().split(" ")[0];
       let dnum = this.dayInNumber(dname);
 
+      // get index of day with marker if selected
       let idx = this.event.days.indexOf(`${dnum}x`);
-      console.log(dd, dname, this.dayInNumber(dname), idx);
 
+      // - 1 if not found means day's not selected
       if (idx !== -1) {
+        // check if within range
         let range = moment.range(this.event.start, this.event.end);
         if (range.contains(dt)) return true;
       }

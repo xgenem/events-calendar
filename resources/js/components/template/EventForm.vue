@@ -2,20 +2,20 @@
   <div>
     <div class="form-group">
       <label>Event</label>
-      <input type="text" class="form-control" placeholder="Title" v-model="event.title" />
+      <input type="text" class="form-control" placeholder="Title" ref="title" />
     </div>
 
     <div class="form-group row">
       <div class="col-md-6">
         <label for="start">From</label>
         <!-- <date-input :name="'start'" v-model="event.start" /> -->
-        <input type="text" class="form-control dtpicker" ref="start" v-model="event.start" />
+        <input type="text" class="form-control dtpicker" ref="start" />
       </div>
 
       <div class="col-md-6">
         <label for="end">To</label>
         <!-- <date-input :name="'end'" v-model="event.end" /> -->
-        <input type="text" class="form-control dtpicker" ref="end" v-model="event.end" />
+        <input type="text" class="form-control dtpicker" ref="end" />
       </div>
     </div>
 
@@ -37,10 +37,10 @@ export default {
   data() {
     return {
       event: {
-        title: "test",
+        title: "",
         start: "",
         end: "",
-        days: "01102030405060"
+        days: ""
       },
       title: "",
       start: "",
@@ -74,8 +74,9 @@ export default {
       //   e.preventDefault();
       this.isSaving = true;
 
-      let { start, end } = this.$refs;
+      let { title, start, end } = this.$refs;
 
+      this.event.title = title.value;
       this.event.start = start.value;
       this.event.end = end.value;
 

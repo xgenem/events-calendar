@@ -1,8 +1,6 @@
 // libraries
 require("./bootstrap");
 require("jquery-ui-bundle");
-require("moment");
-require("moment-range");
 
 // css imports
 import "v-msgx/dist/msg.min.css";
