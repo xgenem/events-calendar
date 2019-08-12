@@ -13337,9 +13337,15 @@ __webpack_require__.r(__webpack_exports__);
       }]
     };
   },
-  mounted: function mounted() {// console.log("Days selector mounted");
-  },
-  methods: {}
+  methods: {
+    selectDay: function selectDay() {
+      var daysStr = "";
+      this.days.forEach(function (e, i) {
+        daysStr += "".concat(i).concat(e.checked ? 1 : 0);
+      });
+      this.$emit("set-days", daysStr);
+    }
+  }
 });
 
 /***/ }),
@@ -13517,16 +13523,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     $(document).ready(function () {
-      console.log("hello");
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
+      dd = dd < 10 ? "0" + dd : dd;
+      mm = mm < 10 ? "0" + mm : mm;
+      today = yyyy + "-" + mm + "-" + dd;
       $(".dtpicker").datepicker({
         dateFormat: "yy-mm-dd",
+        minDate: today,
         type: "text"
       });
     });
   },
   methods: {
-    display: function display() {
-      console.log(this.start);
+    setDays: function setDays(days) {
+      this.event.days = days;
     },
     saveEvent: function saveEvent() {
       var _this = this;
@@ -13538,10 +13551,7 @@ __webpack_require__.r(__webpack_exports__);
           end = _this$$refs.end;
       this.event.start = start.value;
       this.event.end = end.value;
-      console.log(JSON.stringify(this.event));
       this.$http.post("./api/events/new", this.event).then(function (result) {
-        console.log(result);
-
         _this.$Msg.success("Successfully Saved", {
           position: "bottom-right"
         });
@@ -90008,30 +90018,32 @@ var render = function() {
               : d.checked
           },
           on: {
-            click: function($event) {
-              return _vm.test()
-            },
-            change: function($event) {
-              var $$a = d.checked,
-                $$el = $event.target,
-                $$c = $$el.checked ? true : false
-              if (Array.isArray($$a)) {
-                var $$v = null,
-                  $$i = _vm._i($$a, $$v)
-                if ($$el.checked) {
-                  $$i < 0 && _vm.$set(d, "checked", $$a.concat([$$v]))
+            change: [
+              function($event) {
+                var $$a = d.checked,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && _vm.$set(d, "checked", $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        d,
+                        "checked",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
                 } else {
-                  $$i > -1 &&
-                    _vm.$set(
-                      d,
-                      "checked",
-                      $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                    )
+                  _vm.$set(d, "checked", $$c)
                 }
-              } else {
-                _vm.$set(d, "checked", $$c)
+              },
+              function($event) {
+                return _vm.selectDay()
               }
-            }
+            ]
           }
         }),
         _vm._v("\n    " + _vm._s(d.day) + "\n  ")
@@ -90174,12 +90186,24 @@ var render = function() {
         _c("label", { attrs: { for: "start" } }, [_vm._v("From")]),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.event.start,
+              expression: "event.start"
+            }
+          ],
           ref: "start",
           staticClass: "form-control dtpicker",
           attrs: { type: "text" },
+          domProps: { value: _vm.event.start },
           on: {
-            change: function($event) {
-              return _vm.display()
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.event, "start", $event.target.value)
             }
           }
         })
@@ -90189,14 +90213,36 @@ var render = function() {
         _c("label", { attrs: { for: "end" } }, [_vm._v("To")]),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.event.end,
+              expression: "event.end"
+            }
+          ],
           ref: "end",
           staticClass: "form-control dtpicker",
-          attrs: { type: "text" }
+          attrs: { type: "text" },
+          domProps: { value: _vm.event.end },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.event, "end", $event.target.value)
+            }
+          }
         })
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [_c("days-selector")], 1),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [_c("days-selector", { on: { "set-days": _vm.setDays } })],
+      1
+    ),
     _vm._v(" "),
     _c(
       "button",

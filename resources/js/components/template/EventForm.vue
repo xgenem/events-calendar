@@ -9,18 +9,18 @@
       <div class="col-md-6">
         <label for="start">From</label>
         <!-- <date-input :name="'start'" v-model="event.start" /> -->
-        <input type="text" class="form-control dtpicker" ref="start" @change="display()" />
+        <input type="text" class="form-control dtpicker" ref="start" v-model="event.start" />
       </div>
 
       <div class="col-md-6">
         <label for="end">To</label>
         <!-- <date-input :name="'end'" v-model="event.end" /> -->
-        <input type="text" class="form-control dtpicker" ref="end" />
+        <input type="text" class="form-control dtpicker" ref="end" v-model="event.end" />
       </div>
     </div>
 
     <div class="form-group">
-      <days-selector />
+      <days-selector v-on:set-days="setDays" />
     </div>
 
     <button class="btn btn-primary" @click="saveEvent()">
@@ -50,17 +50,25 @@ export default {
   },
   created() {
     $(document).ready(() => {
-      console.log("hello");
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
+
+      dd = dd < 10 ? "0" + dd : dd;
+      mm = mm < 10 ? "0" + mm : mm;
+      today = yyyy + "-" + mm + "-" + dd;
 
       $(".dtpicker").datepicker({
         dateFormat: "yy-mm-dd",
+        minDate: today,
         type: "text"
       });
     });
   },
   methods: {
-    display() {
-      console.log(this.start);
+    setDays(days) {
+      this.event.days = days;
     },
     saveEvent() {
       //   e.preventDefault();
@@ -71,12 +79,9 @@ export default {
       this.event.start = start.value;
       this.event.end = end.value;
 
-      console.log(JSON.stringify(this.event));
-
       this.$http
         .post("./api/events/new", this.event)
         .then(result => {
-          console.log(result);
           this.$Msg.success("Successfully Saved", {
             position: "bottom-right"
           });

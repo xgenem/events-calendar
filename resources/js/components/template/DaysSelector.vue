@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="d in days" :key="d.day" class="days-selector-item">
-      <input type="checkbox" v-model="d.checked" v-on:click="test()" />
+      <input type="checkbox" v-model="d.checked" @change="selectDay()" />
       {{d.day}}
     </div>
   </div>
@@ -22,11 +22,14 @@ export default {
       ]
     };
   },
-  mounted() {
-    // console.log("Days selector mounted");
-  },
   methods: {
-
+    selectDay() {
+      let daysStr = "";
+      this.days.forEach((e, i) => {
+        daysStr += `${i}${e.checked ? 1 : 0}`;
+      });
+      this.$emit("set-days", daysStr);
+    }
   }
 };
 </script>
