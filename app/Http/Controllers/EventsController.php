@@ -29,7 +29,7 @@ class EventsController extends Controller
             'title' => 'required|string',
             'start' => 'required|date',
             'end' => 'required|date',
-            'days' => 'required|string|min:14|max:14',
+            'days' => 'required|string|min:7|max:14',
         ];
         return $rules;
     }
