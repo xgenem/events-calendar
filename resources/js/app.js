@@ -1,7 +1,12 @@
 // libraries
 require("./bootstrap");
-import "v-msgx/dist/msg.min.css";
+require("jquery-ui-bundle");
 
+// css imports
+import "v-msgx/dist/msg.min.css";
+import "jquery-ui/themes/base/all.css";
+
+// for notifications
 import Msg from "v-msgx";
 
 // fontawesome
