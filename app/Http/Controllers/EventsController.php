@@ -15,6 +15,7 @@ class EventsController extends Controller
 
     public function store(Request $request)
     {
+        // validate request
         $validator = $this->validateRequest($request, $this->storeValidationRules());
 
         if ($validator !== true) {
