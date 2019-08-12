@@ -13255,8 +13255,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {// console.log("Component mounted.");
-    // this.$Msg.success("This is a notification", { position: "top-right" });
+  data: function data() {
+    return {
+      event: {
+        title: "",
+        days: "",
+        start: "",
+        end: ""
+      }
+    };
+  },
+  methods: {
+    setEvent: function setEvent(event) {
+      this.event = event;
+    }
   }
 });
 
@@ -13384,6 +13396,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -13391,12 +13405,10 @@ __webpack_require__.r(__webpack_exports__);
       date: new Date(),
       daysInMonth: null,
       windowHeight: 300,
-      event: {
-        name: null
-      },
       prevButtonDisabled: true
     };
   },
+  props: ["event"],
   created: function created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
@@ -13415,7 +13427,6 @@ __webpack_require__.r(__webpack_exports__);
       return months[this.date.getMonth()];
     },
     getDay: function getDay(d) {
-      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       var year = this.date.getFullYear();
       var month = this.date.getMonth();
       var dt = new Date(year, month, d);
@@ -13452,6 +13463,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDaysInMonth: function getDaysInMonth() {
       this.daysInMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
+    },
+    isSelected: function isSelected(dd) {
+      var yy = this.date.getFullYear();
+      var mm = this.date.getMonth();
+      var dt = new Date(yy, mm, dd);
+      var dname = dt.toString().split(" ")[0];
+      var dnum = this.dayInNumber(dname);
+      var idx = this.event.days.indexOf("".concat(dnum, "1")); //   console.log(dd, dname, this.dayInNumber(dname), idx);
+
+      if (idx >= 0 && idx % 2 == 0) {
+        return true;
+      }
+
+      return false;
+    },
+    dayInNumber: function dayInNumber(dayName) {
+      var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      return days.indexOf(dayName);
     }
   },
   computed: {
@@ -13555,6 +13584,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$Msg.success("Successfully Saved", {
           position: "bottom-right"
         });
+
+        _this.$emit("set-event", _this.event);
       })["catch"](function (result) {
         _this.$Msg.error(result, {
           position: "bottom-right"
@@ -89942,9 +89973,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-4" }, [_c("event-form")], 1),
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [_c("event-form", { on: { "set-event": _vm.setEvent } })],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-8" }, [_c("event-calendar")], 1)
+      _c(
+        "div",
+        { staticClass: "col-md-8" },
+        [_c("event-calendar", { attrs: { event: _vm.event } })],
+        1
+      )
     ])
   ])
 }
@@ -90118,14 +90159,25 @@ var render = function() {
       "div",
       { staticClass: "calendar-dates", style: { height: _vm.windowHeight } },
       _vm._l(_vm.daysInMonth, function(d) {
-        return _c("div", { key: d, staticClass: "calendar-day" }, [
-          _c("div", { staticClass: "col-md-2" }, [
-            _c("p", [_vm._v(_vm._s(d) + " " + _vm._s(_vm.getDay(d)))])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-10" }, [
-            _c("p", [_vm._v(_vm._s(_vm.event.name))])
-          ])
+        return _c("div", { key: d }, [
+          _c(
+            "div",
+            {
+              staticClass: "calendar-day row",
+              class: { selected: _vm.isSelected(d) }
+            },
+            [
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("p", [_vm._v(_vm._s(d) + " " + _vm._s(_vm.getDay(d)))])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("p", [
+                  _vm._v(_vm._s(_vm.isSelected(d) ? _vm.event.title : ""))
+                ])
+              ])
+            ]
+          )
         ])
       }),
       0

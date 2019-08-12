@@ -2,10 +2,10 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-4">
-        <event-form />
+        <event-form v-on:set-event="setEvent" />
       </div>
       <div class="col-md-8">
-        <event-calendar />
+        <event-calendar :event="event" />
       </div>
     </div>
   </div>
@@ -13,9 +13,20 @@
 
 <script>
 export default {
-  mounted() {
-    // console.log("Component mounted.");
-    // this.$Msg.success("This is a notification", { position: "top-right" });
+  data() {
+    return {
+      event: {
+        title: "",
+        days: "",
+        start: "",
+        end: ""
+      }
+    };
+  },
+  methods: {
+    setEvent(event) {
+      this.event = event;
+    }
   }
 };
 </script>

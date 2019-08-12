@@ -85,6 +85,7 @@ export default {
           this.$Msg.success("Successfully Saved", {
             position: "bottom-right"
           });
+          this.$emit("set-event", this.event);
         })
         .catch(result => {
           this.$Msg.error(result, {

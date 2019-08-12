@@ -9,12 +9,14 @@
       <div class="clearfix"></div>
     </div>
     <div class="calendar-dates" v-bind:style="{height: windowHeight}">
-      <div class="calendar-day" v-for="d in daysInMonth" :key="d">
-        <div class="col-md-2">
-          <p>{{d}} {{getDay(d)}}</p>
-        </div>
-        <div class="col-md-10">
-          <p>{{event.name}}</p>
+      <div v-for="d in daysInMonth" :key="d">
+        <div class="calendar-day row" v-bind:class="{'selected': isSelected(d)}">
+          <div class="col-md-2">
+            <p>{{d}} {{getDay(d)}}</p>
+          </div>
+          <div class="col-md-9">
+            <p>{{isSelected(d) ? event.title: ""}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -29,20 +31,18 @@ export default {
       date: new Date(),
       daysInMonth: null,
       windowHeight: 300,
-      event: {
-        name: null
-      },
       prevButtonDisabled: true
     };
   },
+  props: ["event"],
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
   beforeMount() {
     // get number of days in the selected month
-    var year = this.date.getFullYear();
-    var month = this.date.getMonth();
+    let year = this.date.getFullYear();
+    let month = this.date.getMonth();
     this.daysInMonth = new Date(year, month + 1, 0).getDate();
   },
   mounted() {
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     getMonthName() {
-      var months = [
+      let months = [
         "January",
         "February",
         "March",
@@ -67,31 +67,21 @@ export default {
       return months[this.date.getMonth()];
     },
     getDay(d) {
-      var days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ];
-
-      var year = this.date.getFullYear();
-      var month = this.date.getMonth();
-      var dt = new Date(year, month, d);
+      let year = this.date.getFullYear();
+      let month = this.date.getMonth();
+      let dt = new Date(year, month, d);
       return dt.toString().split(" ")[0];
     },
     handleResize() {
       this.windowHeight = window.innerHeight - 200 + "px";
     },
     prevMonth() {
-      var currentDate = new Date();
-      var currentYear = currentDate.getFullYear();
-      var currentMonth = currentDate.getMonth();
+      let currentDate = new Date();
+      let currentYear = currentDate.getFullYear();
+      let currentMonth = currentDate.getMonth();
 
-      var year = this.date.getFullYear();
-      var month = this.date.getMonth();
+      let year = this.date.getFullYear();
+      let month = this.date.getMonth();
 
       this.date = new Date(year, month - 1);
 
@@ -106,8 +96,8 @@ export default {
       this.getDaysInMonth();
     },
     nextMonth() {
-      var year = this.date.getFullYear();
-      var month = this.date.getMonth();
+      let year = this.date.getFullYear();
+      let month = this.date.getMonth();
       this.date = new Date(year, month + 1);
 
       //   if (this.date.getTime() == new Date().getTime()) {
@@ -123,6 +113,25 @@ export default {
         this.date.getMonth() + 1,
         0
       ).getDate();
+    },
+    isSelected(dd) {
+      let yy = this.date.getFullYear();
+      let mm = this.date.getMonth();
+      let dt = new Date(yy, mm, dd);
+      let dname = dt.toString().split(" ")[0];
+      let dnum = this.dayInNumber(dname);
+
+      let idx = this.event.days.indexOf(`${dnum}1`);
+      //   console.log(dd, dname, this.dayInNumber(dname), idx);
+
+      if (idx >= 0 && idx % 2 == 0) {
+        return true;
+      }
+      return false;
+    },
+    dayInNumber(dayName) {
+      let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      return days.indexOf(dayName);
     }
   },
   computed: {
