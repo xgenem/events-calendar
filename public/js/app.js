@@ -11571,24 +11571,24 @@ var moment = Object(moment_range__WEBPACK_IMPORTED_MODULE_1__["extendMoment"])(m
       var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       return months[this.date.getMonth()];
     },
-    getDay: function getDay(d) {
-      var year = this.date.getFullYear();
-      var month = this.date.getMonth();
-      var dt = new Date(year, month, d);
+    getDay: function getDay(dd) {
+      var yy = this.date.getFullYear();
+      var mm = this.date.getMonth();
+      var dt = new Date(yy, mm, dd);
       return dt.toString().split(" ")[0];
     },
     handleResize: function handleResize() {
       this.windowHeight = window.innerHeight - 200 + "px";
     },
     prevMonth: function prevMonth() {
-      var currentDate = new Date();
-      var currentYear = currentDate.getFullYear();
-      var currentMonth = currentDate.getMonth();
+      var currDate = new Date();
+      var currYear = currDate.getFullYear();
+      var currMonth = currDate.getMonth();
       var year = this.date.getFullYear();
       var month = this.date.getMonth();
       this.date = new Date(year, month - 1);
 
-      if (currentYear == this.date.getFullYear() && currentMonth == this.date.getMonth()) {
+      if (currYear == this.date.getFullYear() && currMonth == this.date.getMonth()) {
         console.log("oof");
         this.prevButtonDisabled = true;
       } // update days in month
@@ -11597,13 +11597,10 @@ var moment = Object(moment_range__WEBPACK_IMPORTED_MODULE_1__["extendMoment"])(m
       this.setDaysInMount();
     },
     nextMonth: function nextMonth() {
-      var year = this.date.getFullYear();
-      var month = this.date.getMonth();
-      this.date = new Date(year, month + 1); //   if (this.date.getTime() == new Date().getTime()) {
-
-      this.prevButtonDisabled = false; //   }
-      // update days in month
-
+      var yy = this.date.getFullYear();
+      var mm = this.date.getMonth();
+      this.date = new Date(yy, mm + 1);
+      this.prevButtonDisabled = false;
       this.setDaysInMount();
     },
     setDaysInMount: function setDaysInMount() {
@@ -11613,10 +11610,10 @@ var moment = Object(moment_range__WEBPACK_IMPORTED_MODULE_1__["extendMoment"])(m
       var yy = this.date.getFullYear();
       var mm = this.date.getMonth();
       var dt = new Date(yy, mm, dd);
-      var dname = dt.toString().split(" ")[0];
-      var dnum = this.dayInNumber(dname); // get index of day with marker if selected
+      var ddName = dt.toString().split(" ")[0];
+      var ddNum = this.dayInNumber(ddName); // get index of day with marker if selected
 
-      var idx = this.event.days.indexOf("".concat(dnum, "x")); // - 1 if not found means day's not selected
+      var idx = this.event.days.indexOf("".concat(ddNum, "x")); // - 1 if not found means day's not selected
 
       if (idx !== -1) {
         // check if within range
@@ -11626,9 +11623,9 @@ var moment = Object(moment_range__WEBPACK_IMPORTED_MODULE_1__["extendMoment"])(m
 
       return false;
     },
-    dayInNumber: function dayInNumber(dayName) {
+    dayInNumber: function dayInNumber(ddName) {
       var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-      return days.indexOf(dayName);
+      return days.indexOf(ddName);
     }
   },
   computed: {

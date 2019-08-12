@@ -70,19 +70,19 @@ export default {
       ];
       return months[this.date.getMonth()];
     },
-    getDay(d) {
-      let year = this.date.getFullYear();
-      let month = this.date.getMonth();
-      let dt = new Date(year, month, d);
+    getDay(dd) {
+      let yy = this.date.getFullYear();
+      let mm = this.date.getMonth();
+      let dt = new Date(yy, mm, dd);
       return dt.toString().split(" ")[0];
     },
     handleResize() {
       this.windowHeight = window.innerHeight - 200 + "px";
     },
     prevMonth() {
-      let currentDate = new Date();
-      let currentYear = currentDate.getFullYear();
-      let currentMonth = currentDate.getMonth();
+      let currDate = new Date();
+      let currYear = currDate.getFullYear();
+      let currMonth = currDate.getMonth();
 
       let year = this.date.getFullYear();
       let month = this.date.getMonth();
@@ -90,25 +90,22 @@ export default {
       this.date = new Date(year, month - 1);
 
       if (
-        currentYear == this.date.getFullYear() &&
-        currentMonth == this.date.getMonth()
+        currYear == this.date.getFullYear() &&
+        currMonth == this.date.getMonth()
       ) {
         console.log("oof");
         this.prevButtonDisabled = true;
       }
+
       // update days in month
       this.setDaysInMount();
     },
     nextMonth() {
-      let year = this.date.getFullYear();
-      let month = this.date.getMonth();
-      this.date = new Date(year, month + 1);
+      let yy = this.date.getFullYear();
+      let mm = this.date.getMonth();
+      this.date = new Date(yy, mm + 1);
 
-      //   if (this.date.getTime() == new Date().getTime()) {
       this.prevButtonDisabled = false;
-      //   }
-
-      // update days in month
       this.setDaysInMount();
     },
     setDaysInMount() {
@@ -122,11 +119,11 @@ export default {
       let yy = this.date.getFullYear();
       let mm = this.date.getMonth();
       let dt = new Date(yy, mm, dd);
-      let dname = dt.toString().split(" ")[0];
-      let dnum = this.dayInNumber(dname);
+      let ddName = dt.toString().split(" ")[0];
+      let ddNum = this.dayInNumber(ddName);
 
       // get index of day with marker if selected
-      let idx = this.event.days.indexOf(`${dnum}x`);
+      let idx = this.event.days.indexOf(`${ddNum}x`);
 
       // - 1 if not found means day's not selected
       if (idx !== -1) {
@@ -136,9 +133,9 @@ export default {
       }
       return false;
     },
-    dayInNumber(dayName) {
+    dayInNumber(ddName) {
       let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-      return days.indexOf(dayName);
+      return days.indexOf(ddName);
     }
   },
   computed: {
