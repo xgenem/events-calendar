@@ -26,7 +26,7 @@ export default {
     selectDay() {
       let daysStr = "";
       this.days.forEach((e, i) => {
-        daysStr += `${i}${e.checked ? 1 : 0}`;
+        daysStr += `${i}${e.checked ? 'x' : ''}`;
       });
       this.$emit("set-days", daysStr);
     }
