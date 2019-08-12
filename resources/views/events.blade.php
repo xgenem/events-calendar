@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600,700" rel="stylesheet">
 
         <!-- Styles -->
+        <!-- <link rel="stylesheet" href="{{asset('js/lib/jquery-ui-1.12.1/jquery-ui.css')}}"> -->
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
 
         <style>
@@ -23,6 +24,8 @@
             <new-events-component/>
         </div>
 
+        <!-- <script src="{{asset('js/lib/jquery/jquery.min.js')}}"></script> -->
+		<!-- <script src="{{asset('css/lib/bootstrap/js/bootstrap.bundle.min.js')}}"></script> -->
         <script src="js/app.js"></script>
     </body>
 </html>
