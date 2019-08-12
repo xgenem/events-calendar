@@ -8,13 +8,11 @@
     <div class="form-group row">
       <div class="col-md-6">
         <label for="start">From</label>
-        <!-- <date-input :name="'start'" v-model="event.start" /> -->
         <input type="text" class="form-control dtpicker" ref="start" />
       </div>
 
       <div class="col-md-6">
         <label for="end">To</label>
-        <!-- <date-input :name="'end'" v-model="event.end" /> -->
         <input type="text" class="form-control dtpicker" ref="end" />
       </div>
     </div>
@@ -88,10 +86,13 @@ export default {
           });
           this.$emit("set-event", this.event);
         })
-        .catch(result => {
-          this.$Msg.error(result, {
-            position: "bottom-right"
-          });
+        .catch(error => {
+          let e = error.response.data;
+          for (var k in e) {
+            this.$Msg.error(e[k], {
+              position: "bottom-right"
+            });
+          }
         })
         .finally(() => {
           this.isSaving = false;
