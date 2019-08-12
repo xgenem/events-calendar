@@ -24,7 +24,11 @@
 </template>
 
 <script>
-import { constants } from "crypto";
+import Moment from "moment";
+import { extendMoment } from "moment-range";
+
+const moment = extendMoment(Moment);
+
 export default {
   data() {
     return {
@@ -121,11 +125,12 @@ export default {
       let dname = dt.toString().split(" ")[0];
       let dnum = this.dayInNumber(dname);
 
-      let idx = this.event.days.indexOf(`${dnum}1`);
-      //   console.log(dd, dname, this.dayInNumber(dname), idx);
+      let idx = this.event.days.indexOf(`${dnum}x`);
+      console.log(dd, dname, this.dayInNumber(dname), idx);
 
-      if (idx >= 0 && idx % 2 == 0) {
-        return true;
+      if (idx !== -1) {
+        let range = moment.range(this.event.start, this.event.end);
+        if (range.contains(dt)) return true;
       }
       return false;
     },
