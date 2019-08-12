@@ -47,6 +47,8 @@ files.keys().map(key =>
     )
 );
 
+Vue.config.productionTip = false;
+
 // create app
 const app = new Vue({
     el: "#app"
